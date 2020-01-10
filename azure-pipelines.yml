@@ -1,0 +1,83 @@
+# Ephemeral Pipeline
+
+# This pipeline deploys a blob to a container into a storage account under vnet restriction access
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  ResourceGroup: talksandpocs
+  vNetResourceGroup: talksandpocs
+  vnetName: vnetworkloadsample
+  subnetName: snetagents
+  location: westeurope
+  acrName: acragentsimages
+  imageName: $(acrName).azurecr.io/crossdvlup-agents/ubuntu:latest
+  containerName: 'test'
+  accountName: 'staworkloadsample'
+  agentPoolName: crossdvlup-ubuntu-tf012
+  azureSubscription: 'Visual Studio Premium con MSDN'
+  containerRegistryConnection: 'acragentsimages'
+
+stages:
+- stage: Deploy
+  jobs:
+  - job: PrepareAgent
+    displayName: Prepare Agent
+    pool: Hosted Ubuntu 1604
+    steps:
+    - task: AzureContainerAgentCreate@0
+      displayName: 'Azure Container Create for pool crossdvlup-ubuntu-tf012'
+      inputs:
+        azureSubscription: $(azureSubscription)
+        resourceGroupName: $(ResourceGroup)
+        location: $(location)
+        azureDevOpsToken: $(agentPoolAccessToken)
+        containerRegistry: $(containerRegistryConnection)
+        imageName: $(imageName)
+        agentPool: $(agentPoolName)
+        agentPrefix: 'crossdvlup-'
+        vnetResourceGroupName: $(vNetResourceGroup)
+        vnetName: $(vnetName)
+        subnetName: $(subnetName)
+
+  - deployment: Deploy
+    environment: 'Production'
+    dependsOn: PrepareAgent
+    displayName: Deploy Files
+    pool: ${{ variables.agentPoolName }}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+            fetchDepth: 1
+            clean: true
+          - task: TerraformTaskV1@0
+            displayName: 'Terraform Init'
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'Visual Studio Premium con MSDN'
+              backendAzureRmResourceGroupName: 'talksandpocs'
+              backendAzureRmStorageAccountName: 'staworkloadsample'
+              backendAzureRmContainerName: 'test'
+              backendAzureRmKey: 'crossdvlupsample.tfstate'
+          - task: TerraformTaskV1@0
+            displayName: 'Terraform Plan'
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              commandOptions: '-input=false -var "resource_group_name=$(ResourceGroup)" -var "storage_account_name=$(accountName)" -var "storage_container_name=$(containerName)" -out crossdvlupsampleplan'
+              environmentServiceNameAzureRM: 'Visual Studio Premium con MSDN'
+          - task: TerraformTaskV1@0
+            displayName: 'Terraform Validate and Apply'
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              commandOptions: '-auto-approve crossdvlupsampleplan'
+              environmentServiceNameAzureRM: 'Visual Studio Premium con MSDN'
+
