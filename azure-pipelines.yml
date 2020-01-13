@@ -18,7 +18,7 @@ variables:
   imageName: $(acrName).azurecr.io/crossdvlup-agents/ubuntu:latest
   containerName: 'test'
   accountName: 'staworkloadsample'
-  agentPoolName: crossdvlup-ubuntu-tf012
+  agentPoolName: netcoreconfbcn2020-ubuntu-tf012
   azureSubscription: 'Visual Studio Premium con MSDN'
   containerRegistryConnection: 'acragentsimages'
 
@@ -30,7 +30,7 @@ stages:
     pool: Hosted Ubuntu 1604
     steps:
     - task: AzureContainerAgentCreate@0
-      displayName: 'Azure Container Create for pool crossdvlup-ubuntu-tf012'
+      displayName: 'Azure Container Create for pool netcoreconfbcn2020-ubuntu-tf012'
       inputs:
         azureSubscription: $(azureSubscription)
         resourceGroupName: $(ResourceGroup)
@@ -39,7 +39,7 @@ stages:
         containerRegistry: $(containerRegistryConnection)
         imageName: $(imageName)
         agentPool: $(agentPoolName)
-        agentPrefix: 'crossdvlup-'
+        agentPrefix: 'netcoreconfbcn2020-'
         vnetResourceGroupName: $(vNetResourceGroup)
         vnetName: $(vnetName)
         subnetName: $(subnetName)
@@ -65,19 +65,19 @@ stages:
               backendAzureRmResourceGroupName: 'talksandpocs'
               backendAzureRmStorageAccountName: 'staworkloadsample'
               backendAzureRmContainerName: 'test'
-              backendAzureRmKey: 'crossdvlupsample.tfstate'
+              backendAzureRmKey: 'netcoreconfbcn2020.tfstate'
           - task: TerraformTaskV1@0
             displayName: 'Terraform Plan'
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              commandOptions: '-input=false -var "resource_group_name=$(ResourceGroup)" -var "storage_account_name=$(accountName)" -var "storage_container_name=$(containerName)" -out crossdvlupsampleplan'
+              commandOptions: '-input=false -var "resource_group_name=$(ResourceGroup)" -var "storage_account_name=$(accountName)" -var "storage_container_name=$(containerName)" -out netcoreconfbcn2020plan'
               environmentServiceNameAzureRM: 'Visual Studio Premium con MSDN'
           - task: TerraformTaskV1@0
             displayName: 'Terraform Validate and Apply'
             inputs:
               provider: 'azurerm'
               command: 'apply'
-              commandOptions: '-auto-approve crossdvlupsampleplan'
+              commandOptions: '-auto-approve netcoreconfbcn2020plan'
               environmentServiceNameAzureRM: 'Visual Studio Premium con MSDN'
 
