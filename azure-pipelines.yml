@@ -39,7 +39,7 @@ stages:
         containerRegistry: $(containerRegistryConnection)
         imageName: $(imageName)
         agentPool: $(agentPoolName)
-        agentPrefix: 'netcoreconfbcn2020-'
+        agentPrefix: 'netcoreconfbcn-'
         vnetResourceGroupName: $(vNetResourceGroup)
         vnetName: $(vnetName)
         subnetName: $(subnetName)
