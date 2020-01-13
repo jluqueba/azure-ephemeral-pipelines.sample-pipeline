@@ -13,7 +13,7 @@ variables:
   vNetResourceGroup: talksandpocs
   vnetName: vnetworkloadsample
   subnetName: snetagents
-  location: northeurope
+  location: westheurope
   acrName: acragentsimages
   imageName: $(acrName).azurecr.io/netcoreconfbcn2020-agents/ubuntu:latest
   containerName: 'netcoreconfbcn2020'
