@@ -32,17 +32,18 @@ stages:
     - task: AzureContainerAgentCreate@0
       displayName: 'Azure Container Create for pool netcoreconfbcn2020-ubuntu-tf012'
       inputs:
-        azureSubscription: $(azureSubscription)
-        resourceGroupName: $(ResourceGroup)
-        location: $(location)
-        azureDevOpsToken: $(agentPoolAccessToken)
-        containerRegistry: $(containerRegistryConnection)
-        imageName: $(imageName)
-        agentPool: $(agentPoolName)
-        agentPrefix: 'netcoreconfbcn-'
-        vnetResourceGroupName: $(vNetResourceGroup)
-        vnetName: $(vnetName)
-        subnetName: $(subnetName)
+        azureSubscription: '$(azureSubscription)'
+        resourceGroupName: '$(ResourceGroup)'
+        location: '$(location)'
+        azureDevOpsToken: '$(agentPoolAccessToken)'
+        containerRegistry: '$(containerRegistryConnection)'
+        imageName: '$(imageName)'
+        agentPool: '$(agentPoolName)'
+        agentPrefix: 'netcoreconfbcn2020-'
+        vnetResourceGroupName: '$(vNetResourceGroup)'
+        vnetName: '$(vnetName)'
+        subnetName: '$(subnetName)'
+        osType: 'Linux'
 
   - deployment: Deploy
     environment: 'Production'
