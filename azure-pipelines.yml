@@ -15,7 +15,7 @@ variables:
   subnetName: snetagents
   location: westeurope
   acrName: acragentsimages
-  imageName: $(acrName).azurecr.io/crossdvlup-agents/ubuntu:latest
+  imageName: $(acrName).azurecr.io/netcoreconfbcn2020-agents/ubuntu:latest
   containerName: 'netcoreconfbcn2020'
   accountName: 'staworkloadsample'
   agentPoolName: netcoreconfbcn2020-ubuntu-tf012
