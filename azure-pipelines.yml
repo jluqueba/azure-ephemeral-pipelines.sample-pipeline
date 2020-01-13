@@ -16,7 +16,7 @@ variables:
   location: westeurope
   acrName: acragentsimages
   imageName: $(acrName).azurecr.io/crossdvlup-agents/ubuntu:latest
-  containerName: 'test'
+  containerName: 'netcoreconfbcn2020'
   accountName: 'staworkloadsample'
   agentPoolName: netcoreconfbcn2020-ubuntu-tf012
   azureSubscription: 'Visual Studio Premium con MSDN'
