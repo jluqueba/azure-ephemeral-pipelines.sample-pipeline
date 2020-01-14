@@ -44,6 +44,7 @@ stages:
         vnetName: '$(vnetName)'
         subnetName: '$(subnetName)'
         osType: 'Linux'
+        memory: 1.5
 
   - deployment: Deploy
     environment: 'Production'
