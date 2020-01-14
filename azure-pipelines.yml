@@ -9,18 +9,18 @@ resources:
 - repo: self
 
 variables:
-  ResourceGroup: talksandpocs
-  vNetResourceGroup: talksandpocs
-  vnetName: vnetworkloadsample
+  ResourceGroup: netcoreconfbcn2020
+  vNetResourceGroup: netcoreconfbcn2020
+  vnetName: vnetgeneralpurpose
   subnetName: snetagents
   location: westeurope
-  acrName: acragentsimages
+  acrName: acrdevopsagents
   imageName: $(acrName).azurecr.io/netcoreconfbcn2020-agents/ubuntu:latest
   containerName: 'netcoreconfbcn2020'
-  accountName: 'staworkloadsample'
+  accountName: 'netcoreconfbcn2020'
   agentPoolName: netcoreconfbcn2020-ubuntu-tf012
   azureSubscription: 'Visual Studio Premium con MSDN'
-  containerRegistryConnection: 'acragentsimages'
+  containerRegistryConnection: 'acrdevopsagents'
 
 stages:
 - stage: Deploy
