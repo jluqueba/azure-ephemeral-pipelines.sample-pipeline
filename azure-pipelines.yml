@@ -19,7 +19,7 @@ variables:
   containerName: 'netcoreconfbcn2020'
   accountName: 'netcoreconfbcn2020'
   agentPoolName: netcoreconfbcn2020-ubuntu-tf012
-  azureSubscription: 'Visual Studio Premium con MSDN'
+  azureSubscription: 'netcoreconfbcn2020'
   containerRegistryConnection: 'acrdevopsagents'
 
 stages:
