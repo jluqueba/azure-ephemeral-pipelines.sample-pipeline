@@ -15,12 +15,12 @@ variables:
   subnetName: snetagents
   location: westeurope
   acrName: acrdevopsagents
-  imageName: $(acrName).azurecr.io/netcoreconfbcn2020-agents/ubuntu:latest
-  containerName: 'netcoreconfbcn2020'
-  accountName: 'netcoreconfbcn2020'
-  agentPoolName: netcoreconfbcn2020-ubuntu-tf012
-  azureSubscription: 'Visual Studio Premium con MSDN'
-  containerRegistryConnection: 'acrdevopsagents'
+  imageName: $(acrName).azurecr.io/devopsagents/ubuntu:latest
+  containerName: 'cnttestfiles'
+  accountName: 'stageneralpurpose'
+  agentPoolName: netcoreconfbcn2020-ubuntu
+  azureSubscription: 'netcoreconfbcn2020-001'
+  containerRegistryConnection: 'netcoreconfbcn2020-001-acrdevopsagents'
 
 stages:
 - stage: Deploy
