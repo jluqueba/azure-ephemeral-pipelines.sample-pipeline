@@ -9,18 +9,18 @@ resources:
 - repo: self
 
 variables:
-  ResourceGroup: netcoreconfbcn2020
-  vNetResourceGroup: netcoreconfbcn2020
+  ResourceGroup: netcoreconf2020
+  vNetResourceGroup: netcoreconf2020
   vnetName: vnetgeneralpurpose
   subnetName: snetagents
   location: westeurope
-  acrName: acrdevopsagents
-  imageName: $(acrName).azurecr.io/devopsagents/ubuntu:latest
-  containerName: 'cnttestfiles'
+  acrName: acragentimagepurpose
+  imageName: $(acrName).azurecr.io/azuredevopsagents/ubuntu:latest
+  containerName: 'cnttestfilespurpose'
   accountName: 'stageneralpurpose'
-  agentPoolName: netcoreconfbcn2020-ubuntu
-  azureSubscription: 'netcoreconfbcn2020-001'
-  containerRegistryConnection: 'netcoreconfbcn2020-001-acrdevopsagents'
+  agentPoolName: netcoreconf2020
+  azureSubscription: 'netcoreconf2020'
+  containerRegistryConnection: 'netcoreconfbcn2020acr'
 
 stages:
 - stage: Deploy
@@ -30,7 +30,7 @@ stages:
     pool: Hosted Ubuntu 1604
     steps:
     - task: AzureContainerAgentCreate@0
-      displayName: 'Azure Container Create for pool netcoreconfbcn2020-ubuntu-tf012'
+      displayName: 'Azure Container Create for pool netcoreconf2020'
       inputs:
         azureSubscription: '$(azureSubscription)'
         resourceGroupName: '$(ResourceGroup)'
@@ -39,7 +39,7 @@ stages:
         containerRegistry: '$(containerRegistryConnection)'
         imageName: '$(imageName)'
         agentPool: '$(agentPoolName)'
-        agentPrefix: 'netcoreconfbcn2020-'
+        agentPrefix: 'netcoreconf2020-'
         vnetResourceGroupName: '$(vNetResourceGroup)'
         vnetName: '$(vnetName)'
         subnetName: '$(subnetName)'
@@ -64,22 +64,22 @@ stages:
               provider: 'azurerm'
               command: 'init'
               backendServiceArm: '$(azureSubscription)'
-              backendAzureRmResourceGroupName: 'talksandpocs'
-              backendAzureRmStorageAccountName: 'staworkloadsample'
-              backendAzureRmContainerName: 'test'
-              backendAzureRmKey: 'netcoreconfbcn2020.tfstate'
+              backendAzureRmResourceGroupName: '$(ResourceGroup)'
+              backendAzureRmStorageAccountName: 'stageneralpurpose'
+              backendAzureRmContainerName: 'tfstate'
+              backendAzureRmKey: 'netcoreconf2020.tfstate'
           - task: TerraformTaskV1@0
             displayName: 'Terraform Plan'
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              commandOptions: '-input=false -var "resource_group_name=$(ResourceGroup)" -var "storage_account_name=$(accountName)" -var "storage_container_name=$(containerName)" -out netcoreconfbcn2020plan'
+              commandOptions: '-input=false -var "resource_group_name=$(ResourceGroup)" -var "storage_account_name=$(accountName)" -var "storage_container_name=$(containerName)" -out netcoreconf2020plan'
               environmentServiceNameAzureRM: '$(azureSubscription)'
           - task: TerraformTaskV1@0
             displayName: 'Terraform Validate and Apply'
             inputs:
               provider: 'azurerm'
               command: 'apply'
-              commandOptions: '-auto-approve netcoreconfbcn2020plan'
+              commandOptions: '-auto-approve netcoreconf2020plan'
               environmentServiceNameAzureRM: '$(azureSubscription)'
 
