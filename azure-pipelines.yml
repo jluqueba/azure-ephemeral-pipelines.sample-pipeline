@@ -20,7 +20,7 @@ variables:
   accountName: 'stageneralpurpose'
   agentPoolName: netcoreconf2020
   azureSubscription: 'netcoreconf2020'
-  containerRegistryConnection: 'netcoreconfbcn2020acr'
+  containerRegistryConnection: 'netcoreconf2020acr'
 
 stages:
 - stage: Deploy
