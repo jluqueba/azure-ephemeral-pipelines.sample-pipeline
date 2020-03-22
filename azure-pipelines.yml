@@ -9,8 +9,8 @@ resources:
 - repo: self
 
 variables:
-  ResourceGroup: netcoreconf2020
-  vNetResourceGroup: netcoreconf2020
+  ResourceGroup: owaep
+  vNetResourceGroup: owaep
   vnetName: vnetgeneralpurpose
   subnetName: snetagents
   location: westeurope
@@ -18,9 +18,9 @@ variables:
   imageName: $(acrName).azurecr.io/azuredevopsagents/ubuntu:latest
   containerName: 'cnttestfilespurpose'
   accountName: 'stageneralpurpose'
-  agentPoolName: netcoreconf2020
-  azureSubscription: 'netcoreconf2020'
-  containerRegistryConnection: 'netcoreconf2020acr'
+  agentPoolName: owaep
+  azureSubscription: 'Personal'
+  containerRegistryConnection: 'acragentimagepurpose'
 
 stages:
 - stage: Deploy
