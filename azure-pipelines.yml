@@ -73,7 +73,7 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              commandOptions: '-input=false -var "resource_group_name=$(ResourceGroup)" -var "storage_account_name=$(accountName)" -var "storage_container_name=$(containerName)" -out netcoreconf2020plan'
+              commandOptions: '-input=false -var "storage_account_name=$(accountName)" -var "storage_container_name=$(containerName)" -out netcoreconf2020plan'
               environmentServiceNameAzureRM: '$(azureSubscription)'
           - task: TerraformTaskV1@0
             displayName: 'Terraform Validate and Apply'
