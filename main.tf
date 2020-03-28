@@ -1,3 +1,8 @@
+provider "azurerm" {
+  version = "2.0.0"
+  features {}
+}
+
 resource "azurerm_storage_blob" "blob" {
   name                   = "testfile.txt"
   resource_group_name    = var.resource_group_name
